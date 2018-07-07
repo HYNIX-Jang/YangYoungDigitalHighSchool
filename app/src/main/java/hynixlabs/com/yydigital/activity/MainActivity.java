@@ -1,14 +1,15 @@
 package hynixlabs.com.yydigital.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView txtMeal;
     private CardView mealCardView;
+    private CardView facebookCardView;
+    private CardView schoolCardView;
+    private CardView noticeCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         //FindViewByID
         txtMeal = findViewById(R.id.txtMeal);
         mealCardView = findViewById(R.id.mealCardView);
+        facebookCardView = findViewById(R.id.facebookCardView);
+        schoolCardView = findViewById(R.id.schoolCardView);
+        noticeCardView = findViewById(R.id.noticeCardView);
+
 
         //툴바 설정
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,12 +59,29 @@ public class MainActivity extends AppCompatActivity {
                 getMeal("tommorow");
             }
         });
+
+        facebookCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFacebook();
+            }
+        });
     }
 
     //해당 요일 급식 가져오는 메소드
     private void getMeal(String week) {
         JsoupAsyncTask jsoupAsyncTask = new JsoupAsyncTask(week);
         jsoupAsyncTask.execute();
+    }
+
+    private void openFacebook() {
+        String URL = "https://m.facebook.com/yyhsstudent";
+        String URI = "fb://facewebmodal/f?href=" + URL;
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URI)));
+        } catch (Exception e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -80,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
                 calendar.setTime(new Date(System.currentTimeMillis())); //현재 시간
                 switch (status) {
                     case "today":
-                        URL += new java.text.SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+                        URL += new SimpleDateFormat("yyyyMMdd", Locale.KOREA)
                                 .format(calendar.getTime());
                         break;
                     case "tommorow":
                         calendar.add(Calendar.DATE, 1);
-                        URL += new java.text.SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+                        URL += new SimpleDateFormat("yyyyMMdd", Locale.KOREA)
                                 .format(calendar.getTime());
                         break;
                 }
