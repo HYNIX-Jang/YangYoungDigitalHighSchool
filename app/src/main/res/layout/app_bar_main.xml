@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_header2"
+                android:src="@drawable/bg_header3"
                 app:layout_collapseMode="parallax" />
 
             <!--CollapseMode = pin으로 ToolBar고정-->
@@ -36,13 +36,11 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!--카드뷰와 연동-->
+    <!--카드뷰와 연동, SwipeRefreshLayout-->
     <include
         android:id="@+id/mainCardview"
         layout="@layout/main_cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
 </android.support.design.widget.CoordinatorLayout>
