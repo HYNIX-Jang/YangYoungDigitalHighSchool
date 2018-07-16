@@ -1,10 +1,11 @@
 package hynixlabs.com.yydigital.vo;
 
-public class noticeItem {
+public class NoticeItem {
     private String title;
     private String author;
     private String date;
-    private int view;
+    private String URL;
+    private String view;
 
     public String getTitle() {
         return title;
@@ -30,11 +31,19 @@ public class noticeItem {
         this.date = date;
     }
 
-    public int getView() {
+    public String getView() {
         return view;
     }
 
-    public void setView(int view) {
+    public void setView(String view) {
         this.view = view;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 }

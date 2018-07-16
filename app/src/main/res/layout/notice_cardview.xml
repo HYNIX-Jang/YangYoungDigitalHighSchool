@@ -1,6 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/noticeInCardView"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:layout_margin="15dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txtNoticeInTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:text="제목"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/txtNoticeInAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="제목"
+
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtNoticeInDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="제목"
+
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/txtNoticeInView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="제목"
+            android:textSize="15sp" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -2,11 +2,10 @@ package hynixlabs.com.yydigital.activity;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,7 +19,7 @@ import hynixlabs.com.yydigital.R;
 import hynixlabs.com.yydigital.adapter.NoticeAdapter;
 import hynixlabs.com.yydigital.vo.NoticeItem;
 
-public class NoticeActivity extends AppCompatActivity {
+public class NotiActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Context context;
     private List<NoticeItem> noticeItems;
@@ -31,7 +30,8 @@ public class NoticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("공지사항");
+
+        setTitle("가정통신문");
 
         //FindViewByID
         recyclerView = findViewById(R.id.recyclerView);
@@ -49,7 +49,7 @@ public class NoticeActivity extends AppCompatActivity {
     }
 
     public class JsoupNoticeAsyncTask extends AsyncTask<Void, Void, Void> {
-        private String URL = "http://y-y.hs.kr/board.list?mcode=1710";
+        private String URL = "http://y-y.hs.kr/board.list?mcode=1712";
         private NoticeItem vo;
 
 
@@ -60,7 +60,7 @@ public class NoticeActivity extends AppCompatActivity {
                 noticeItems = new ArrayList<>();
                 System.out.println("---------------------------------------------------------------");
 
-                for (int i = 0; i < 21; i++) {
+                for (int i = 0; i < 20; i++) {
                     vo = new NoticeItem();
                     Elements titles = doc.select("td.title>a").eq(i);
                     Elements author = doc.select("a[href='#none']").eq(i + 1);
