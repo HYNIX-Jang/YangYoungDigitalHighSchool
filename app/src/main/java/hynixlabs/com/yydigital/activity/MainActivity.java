@@ -10,10 +10,17 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -74,6 +81,55 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         // 툴바 설정
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle(R.string.app_full);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        // 네비게이션메뉴 오픈
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                float slideX = drawerView.getWidth() * slideOffset;
+                CoordinatorLayout content = findViewById(R.id.appBar);
+                content.setTranslationX(slideX);
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id) {
+                    case R.id.nav_info:
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                        break;
+                }
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
 
         getDday();            // 실행할 시 D-DAY정보 가져옴
         isConnected();        // 실행할 시 인터넷 유무 확인 후 적절한 기능 실행
@@ -133,16 +189,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         noticeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, NoticeActivity.class));
+
             }
         });
 
         notiCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NotiActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, NotiActivity.class));
             }
         });
 
@@ -153,6 +208,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    //아래는 전부 NavigationBar설정
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     // 인터넷 연결 확인
@@ -232,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             this.status = status;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         protected Void doInBackground(Void... params) {
             try {
